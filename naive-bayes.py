@@ -29,6 +29,7 @@ class NaiveBayes():
             #count all parts that can occur in the set
             self.totalInstanceCounter[label] = self.totalInstanceCounter.get(label, 0) + len(sample)
             #count all specific instances separately for the labels
+            self.instanceCounterDict[label] = {}
             for case in sample:
                 self.instanceCounterDict[label][case] = self.instanceCounterDict[label].get(case, 0) + 1
 
@@ -44,10 +45,18 @@ class NaiveBayes():
             probability = 1.0
             #for every part of toBeClassified count the probability of occuring if the given test was correct choice and multiply all of them
             for case in toBeClassified:
-                probability *= self.instanceCounterDict[label][case] + laPlace / self.totalInstanceCounter[label] + laPlace
+                if case in self.instanceCounterDict[label].keys():
+                    probability *= self.instanceCounterDict[label][case] + laPlace / self.totalInstanceCounter[label] + laPlace
+                else:
+                    probability *= 1e-3
             #P(B|A)P(A)
-            probabilitiesDictionary[probability * self.prioProbability] = label
+            probabilitiesDictionary[probability * self.prioProbability[label]] = label
         #find the highest probability case and return it
         highestProbability = max(probabilitiesDictionary.keys())
         #return class name of highest probability class
         return (probabilitiesDictionary[highestProbability])
+
+test = NaiveBayes(np.array([[1,2],[2,3],[1,2],[2,3]]), np.array([1,2,1,2]))
+test.train()
+print (test.classify(np.array([1,2])))
+print (test.classify(np.array([2,3])))
