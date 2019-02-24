@@ -48,7 +48,7 @@ class NaiveBayes():
                 if case in self.instanceCounterDict[label].keys():
                     probability *= self.instanceCounterDict[label][case] + laPlace / self.totalInstanceCounter[label] + laPlace
                 else:
-                    probability *= 1e-3
+                    probability *= laPlace / self.totalInstanceCounter[label] + laPlace
             #P(B|A)P(A)
             probabilitiesDictionary[probability * self.prioProbability[label]] = label
         #find the highest probability case and return it
