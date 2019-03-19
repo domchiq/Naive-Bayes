@@ -54,9 +54,9 @@ class NaiveBayes():
         #find the highest probability case and return it
         highestProbability = max(probabilitiesDictionary.keys())
         #return class name of highest probability class
-        return (probabilitiesDictionary[highestProbability])
+        return probabilitiesDictionary[highestProbability]
 
 test = NaiveBayes(np.array([[1,2],[2,3],[1,2],[2,3]]), np.array([1,2,1,2]))
 test.train()
-print (test.classify(np.array([1,2])))
-print (test.classify(np.array([2,3])))
+print(test.classify(np.array([1,2])))
+print(test.classify(np.array([2,3])))
